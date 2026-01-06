@@ -1,9 +1,9 @@
 import { fromHono } from "chanfana";
 import { Hono } from "hono";
-import { TaskCreate } from "./endpoints/taskCreate";
-import { TaskDelete } from "./endpoints/taskDelete";
-import { TaskFetch } from "./endpoints/taskFetch";
-import { TaskList } from "./endpoints/taskList";
+import { PetsList } from "./endpoints/petsList";
+import { PetCreate } from "./endpoints/petCreate";
+import { PetUpdate } from "./endpoints/petUpdate";
+import { PetDelete } from "./endpoints/petDelete";
 
 // Start a Hono app
 const app = new Hono<{ Bindings: Env }>();
@@ -14,10 +14,10 @@ const openapi = fromHono(app, {
 });
 
 // Register OpenAPI endpoints
-openapi.get("/api/tasks", TaskList);
-openapi.post("/api/tasks", TaskCreate);
-openapi.get("/api/tasks/:taskSlug", TaskFetch);
-openapi.delete("/api/tasks/:taskSlug", TaskDelete);
+openapi.get("/api/pets", PetsList);
+openapi.post("/api/pets", PetCreate);
+openapi.put("/api/pets/:id", PetUpdate);
+openapi.delete("/api/pets/:id", PetDelete);
 
 // You may also register routes for non OpenAPI directly on Hono
 // app.get('/test', (c) => c.text('Hono!'))

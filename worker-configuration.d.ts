@@ -6,6 +6,7 @@ declare namespace Cloudflare {
 		mainModule: typeof import("./src/index");
 	}
 	interface Env {
+		HYPERDRIVE: Hyperdrive;
 	}
 }
 interface Env extends Cloudflare.Env {}

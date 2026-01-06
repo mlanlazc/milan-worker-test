@@ -6,10 +6,19 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "milan-worker-test",
 	"main": "src/index.ts",
+	"compatibility_flags": [
+    "nodejs_compat"
+  	],
 	"compatibility_date": "2026-01-03",
 	"observability": {
 		"enabled": true
-	}
+	},
+	"hyperdrive": [
+		{
+			"binding": "HYPERDRIVE",
+			"id": "e078efdf13dd4038b1fea06891ab0080"
+		}
+	]
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
