@@ -1,11 +1,11 @@
 generator client {
-  provider = "prisma-client-js"
-  runtime  = "cloudflare"
-  output   = "./generated/client"
+  provider        = "prisma-client-js"
+  output          = "./generated/client-d1"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
 }
 
 model Pet {

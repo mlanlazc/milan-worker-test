@@ -64,6 +64,7 @@ export class PetsList extends OpenAPIRoute {
 			await client.connect();
 
 			// Query pets with pagination
+			const queryStartTime = Date.now();
 			const result = await client.query(
 				`SELECT id, name, breed, birthday
 				 FROM pets
@@ -75,6 +76,10 @@ export class PetsList extends OpenAPIRoute {
 			// Get total count
 			const countResult = await client.query(`SELECT COUNT(*) as total FROM pets`);
 			const total = parseInt(countResult.rows[0].total);
+			const queryEndTime = Date.now();
+			const queryDuration = queryEndTime - queryStartTime;
+
+			console.log(`[Raw SQL] Query completed in ${queryDuration}ms (page: ${page}, limit: ${limit}, total: ${total})`);
 
 			return {
 				success: true,

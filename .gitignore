@@ -169,6 +169,6 @@ dist
 !.env.example
 .wrangler/
 
-# Prisma generated client
+# Prisma generated clients
 
 prisma/generated/

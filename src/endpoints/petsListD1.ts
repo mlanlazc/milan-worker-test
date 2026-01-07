@@ -1,7 +1,7 @@
 import { OpenAPIRoute, Num } from "chanfana";
 import { z } from "zod";
 import { type AppContext } from "../types";
-import { createPrismaClient } from "../lib/prisma";
+import { createPrismaD1Client } from "../lib/prisma-d1";
 
 const Pet = z.object({
 	id: z.number(),
@@ -10,10 +10,10 @@ const Pet = z.object({
 	birthday: z.string(),
 });
 
-export class PetsListPrisma extends OpenAPIRoute {
+export class PetsListD1 extends OpenAPIRoute {
 	schema = {
 		tags: ["Pets"],
-		summary: "List Pets (Prisma)",
+		summary: "List Pets (D1 with Prisma)",
 		request: {
 			query: z.object({
 				page: Num({
@@ -30,7 +30,7 @@ export class PetsListPrisma extends OpenAPIRoute {
 		},
 		responses: {
 			"200": {
-				description: "Returns a list of pets using Prisma ORM",
+				description: "Returns a list of pets using D1 database with Prisma ORM",
 				content: {
 					"application/json": {
 						schema: z.object({
@@ -57,8 +57,8 @@ export class PetsListPrisma extends OpenAPIRoute {
 		const limit = limitParam ?? 10;
 		const skip = page * limit;
 
-		// Create Prisma client
-		const { prisma, cleanup } = createPrismaClient(c);
+		// Create Prisma D1 client
+		const { prisma, cleanup } = createPrismaD1Client(c);
 
 		const queryStartTime = Date.now();
 
@@ -75,12 +75,18 @@ export class PetsListPrisma extends OpenAPIRoute {
 				prisma.pet.count(),
 			]);
 
-			console.log(`Prisma query took ${Date.now() - queryStartTime} ms`);
+			const queryDuration = Date.now() - queryStartTime;
+			console.log(`[D1 Prisma] Query completed in ${queryDuration}ms (page: ${page}, limit: ${limit}, total: ${total})`);
 
 			return {
 				success: true,
 				result: {
-					pets,
+					pets: pets.map((pet) => ({
+						id: pet.id,
+						name: pet.name,
+						breed: pet.breed,
+						birthday: pet.birthday.toISOString(),
+					})),
 					page: page || 0,
 					total,
 				},

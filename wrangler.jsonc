@@ -7,8 +7,8 @@
 	"name": "milan-worker-test",
 	"main": "src/index.ts",
 	"compatibility_flags": [
-    "nodejs_compat"
-  	],
+		"nodejs_compat"
+	],
 	"compatibility_date": "2026-01-03",
 	"observability": {
 		"enabled": true
@@ -17,6 +17,14 @@
 		{
 			"binding": "HYPERDRIVE",
 			"id": "e078efdf13dd4038b1fea06891ab0080"
+		}
+	],
+	"d1_databases": [
+		{
+			"binding": "MILAN_DB_TEST_URL",
+			"database_name": "milan-db-test",
+			"database_id": "c10f054b-915e-49a8-b537-371a8a292fb2",
+			"remote": true
 		}
 	]
 	/**
