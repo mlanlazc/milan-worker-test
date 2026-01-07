@@ -1,9 +1,7 @@
 import { OpenAPIRoute, Num } from "chanfana";
 import { z } from "zod";
 import { type AppContext } from "../types";
-import { PrismaClient } from "../../prisma/generated/client";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { Pool } from "pg";
+import { createPrismaClient } from "../lib/prisma";
 
 const Pet = z.object({
 	id: z.number(),
@@ -59,10 +57,8 @@ export class PetsListPrisma extends OpenAPIRoute {
 		const limit = limitParam ?? 10;
 		const skip = page * limit;
 
-		// Create connection pool using Hyperdrive connection string
-		const pool = new Pool({ connectionString: c.env.HYPERDRIVE.connectionString });
-		const adapter = new PrismaPg(pool);
-		const prisma = new PrismaClient({ adapter });
+		// Create Prisma client
+		const { prisma, cleanup } = createPrismaClient(c);
 
 		try {
 			// Query pets with pagination using Prisma
@@ -99,8 +95,7 @@ export class PetsListPrisma extends OpenAPIRoute {
 				500
 			);
 		} finally {
-			await prisma.$disconnect();
-			await pool.end();
+			await cleanup();
 		}
 	}
 }
