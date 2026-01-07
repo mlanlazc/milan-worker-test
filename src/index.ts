@@ -1,6 +1,7 @@
 import { fromHono } from "chanfana";
 import { Hono } from "hono";
 import { PetsList } from "./endpoints/petsList";
+import { PetsListPrisma } from "./endpoints/petsListPrisma";
 import { PetCreate } from "./endpoints/petCreate";
 import { PetUpdate } from "./endpoints/petUpdate";
 import { PetDelete } from "./endpoints/petDelete";
@@ -15,6 +16,7 @@ const openapi = fromHono(app, {
 
 // Register OpenAPI endpoints
 openapi.get("/api/pets", PetsList);
+openapi.get("/api/pets-prisma", PetsListPrisma);
 openapi.post("/api/pets", PetCreate);
 openapi.put("/api/pets/:id", PetUpdate);
 openapi.delete("/api/pets/:id", PetDelete);
