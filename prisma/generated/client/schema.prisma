@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+  runtime  = "cloudflare"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Pet {
+  id       Int      @id @default(autoincrement())
+  name     String
+  breed    String
+  birthday DateTime
+
+  @@map("pets")
+}

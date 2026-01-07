@@ -1,0 +1,18 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "./generated/client-d1"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Pet {
+  id       Int      @id @default(autoincrement())
+  name     String
+  breed    String
+  birthday DateTime
+
+  @@map("pets")
+}
