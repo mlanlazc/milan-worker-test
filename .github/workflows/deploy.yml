@@ -23,6 +23,9 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
+      - name: Generate Prisma Client for D1
+        run: npx prisma generate --schema=./prisma/schema-d1.prisma
+
       - run: npx wrangler deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
