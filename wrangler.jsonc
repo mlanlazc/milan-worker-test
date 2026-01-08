@@ -27,6 +27,13 @@
 			"remote": true
 		}
 	],
+	"secrets_store_secrets": [
+		{
+			"binding": "CLERK_SECRET_KEY",
+			"store_id": "b3b07c26a1cb40d396b5d83d739d9392",
+			"secret_name": "CLERK_SECRET_KEY"
+		}
+	],
 	"vars": {  "CLERK_PUBLISHABLE_KEY": "pk_test_dXB3YXJkLW1hZ3BpZS0xNC5jbGVyay5hY2NvdW50cy5kZXYk" }
 	/**
 	 * Smart Placement
