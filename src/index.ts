@@ -1,5 +1,7 @@
 import { fromHono } from "chanfana";
 import { Hono } from "hono";
+import { clerkMiddleware, getAuth } from '@hono/clerk-auth'
+import { AuthCallback } from "./endpoints/authCallback";
 import { PetsList } from "./endpoints/petsList";
 import { PetsListPrisma } from "./endpoints/petsListPrisma";
 import { PetsListD1 } from "./endpoints/petsListD1";
@@ -9,13 +11,16 @@ import { PetDelete } from "./endpoints/petDelete";
 
 // Start a Hono app
 const app = new Hono<{ Bindings: Env }>();
+app.use('*', clerkMiddleware());
 
 // Setup OpenAPI registry
 const openapi = fromHono(app, {
 	docs_url: "/",
+	
 });
 
 // Register OpenAPI endpoints
+openapi.get("/api/auth/callback", AuthCallback);
 openapi.get("/api/pets", PetsList);
 openapi.get("/api/pets-prisma", PetsListPrisma);
 openapi.get("/api/pets-d1", PetsListD1);

@@ -9,6 +9,8 @@ declare namespace Cloudflare {
 		DATABASE_URL: string;
 		MILAN_DB_TEST_URL: D1Database;
 		HYPERDRIVE: Hyperdrive;
+        CLERK_SECRET_KEY: string;
+        CLERK_PUBLISHABLE_KEY: string;
 	}
 }
 interface Env extends Cloudflare.Env {}

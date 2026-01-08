@@ -13,11 +13,13 @@
     "db:studio": "dotenv -e .env -- prisma studio"
   },
   "dependencies": {
+    "@clerk/backend": "^2.29.1",
+    "@hono/clerk-auth": "^3.0.3",
     "@prisma/adapter-d1": "^7.2.0",
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
     "chanfana": "^2.6.3",
-    "hono": "^4.6.20",
+    "hono": "^4.11.3",
     "pg": "^8.16.3",
     "prisma": "^7.2.0",
     "zod": "^3.24.1"

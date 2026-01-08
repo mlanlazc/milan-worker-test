@@ -1,4 +1,5 @@
 import { OpenAPIRoute, Num } from "chanfana";
+import { getAuth } from '@hono/clerk-auth'
 import { z } from "zod";
 import { type AppContext } from "../types";
 import { createPrismaD1Client } from "../lib/prisma-d1";
@@ -15,6 +16,9 @@ export class PetsListD1 extends OpenAPIRoute {
 		tags: ["Pets"],
 		summary: "List Pets (D1 with Prisma)",
 		request: {
+			headers: z.object({
+				Authorization: z.string().nullable().describe("Bearer token for authentication"),
+			}),
 			query: z.object({
 				page: Num({
 					description: "Page number",
@@ -48,6 +52,19 @@ export class PetsListD1 extends OpenAPIRoute {
 	};
 
 	async handle(c: AppContext) {
+		const auth = getAuth(c);
+		console.log('Auth object:', auth);
+		console.log('Authenticated user ID:', auth.userId);
+		if (!auth.userId) {
+			return c.json(
+				{
+					success: false,
+					error: "Unauthorized",
+				},
+				401
+			);
+		};
+
 		// Get validated data
 		const data = await this.getValidatedData<typeof this.schema>();
 
@@ -92,6 +109,7 @@ export class PetsListD1 extends OpenAPIRoute {
 				},
 			};
 		} catch (error) {
+			console.log('Error during D1 Prisma query:', error);
 			return c.json(
 				{
 					success: false,
